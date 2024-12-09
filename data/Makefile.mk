@@ -2,21 +2,21 @@
 # ARC Definitions
 # -------------------------------------------------------------------
 # ARC labels
-TEXT_SYSTEM_ARC       := /a/0/0/2
-TEXT_EVENTS_ARC       := /a/0/0/3
-POKEGRA_SPRITES_ARC   := /a/0/0/4
-POKEGRA_ICONS_ARC     := /a/0/0/7
-
-PML_PERSONAL_ARC      := /a/0/1/6
-PML_LEARNSETS_ARC     := /a/0/1/8
-PML_EVOLUTION_ARC     := /a/0/1/9
-PML_MOVES_ARC         := /a/0/2/1
-ITEMS_ARC             := /a/0/2/4
-UI_GRAPHICS_ARC       := /a/0/8/2
-TRDATA_ARC 			  := /a/0/9/1
-TRPOKE_ARC 			  := /a/0/9/2
-UI2_GRAPHICS_ARC      := /a/1/2/5
-ENCOUNTERS_ARC        := /a/1/2/7
+TEXT_SYSTEM_ARC        := /a/0/0/2
+TEXT_EVENTS_ARC        := /a/0/0/3
+POKEGRA_SPRITES_ARC    := /a/0/0/4
+POKEGRA_ICONS_ARC      := /a/0/0/7
+PML_PERSONAL_ARC       := /a/0/1/6
+PML_LEARNSETS_ARC      := /a/0/1/8
+PML_EVOLUTION_ARC      := /a/0/1/9
+PML_MOVES_ARC          := /a/0/2/1
+ITEMS_ARC              := /a/0/2/4
+UI_GRAPHICS_ARC        := /a/0/8/2
+TRDATA_ARC 	           := /a/0/9/1
+TRPOKE_ARC 	           := /a/0/9/2
+UI2_GRAPHICS_ARC       := /a/1/2/5
+ENCOUNTERS_ARC         := /a/1/2/7
+POKEGRA_FOOTPRINTS_ARC := /a/1/6/5
 
 # -------------------------------------------------------------------
 # Data Directories
@@ -39,13 +39,14 @@ BATTLE_GRAPHICS_ROOT := $(data_dir)/graphics/battle
 HALL_OF_FAME_GRAPHICS_ROOT := $(data_dir)/graphics/hall_of_fame
 POKEGRA_SPRITES_ROOT := $(data_dir)/graphics/pokegra/battle_sprites
 POKEGRA_ICONS_ROOT := $(data_dir)/graphics/pokegra/icons
+POKEGRA_FOOTPRINTS_ROOT := $(data_dir)/graphics/pokegra/footprints
 UI_GRAPHICS_ROOT := $(data_dir)/graphics/ui
 UI2_GRAPHICS_ROOT := $(data_dir)/graphics/ui_2
 
 # -------------------------------------------------------------------
 # Targets 
 # -------------------------------------------------------------------
-ARCS := $(POKEGRA_ICONS_ARC) $(POKEGRA_SPRITES_ARC) $(ENCOUNTERS_ARC) $(TEXT_SYSTEM_ARC) $(ITEMS_ARC) $(PML_EVOLUTION_ARC) $(PML_PERSONAL_ARC) $(PML_LEARNSETS_ARC) $(PML_MOVES_ARC) $(TRDATA_ARC) $(TRPOKE_ARC)
+ARCS := $(POKEGRA_ICONS_ARC) $(POKEGRA_SPRITES_ARC) $(POKEGRA_FOOTPRINTS_ARC) $(ENCOUNTERS_ARC) $(TEXT_SYSTEM_ARC) $(ITEMS_ARC) $(PML_EVOLUTION_ARC) $(PML_PERSONAL_ARC) $(PML_LEARNSETS_ARC) $(PML_MOVES_ARC) $(TRDATA_ARC) $(TRPOKE_ARC)
 ARC_TARGETS := $(patsubst %, $(romfs)%, $(ARCS))
 
 # Generic
@@ -78,8 +79,11 @@ POKEGRA_ICONS_ANIM	 	 	     := $(patsubst $(POKEGRA_ICONS_ROOT)/%.nanr, $(build_
 POKEGRA_ICONS_MCELL_ANIM	     := $(patsubst $(POKEGRA_ICONS_ROOT)/%.nmar, $(build_dir)$(POKEGRA_ICONS_ARC)/%.nmar, $(wildcard $(POKEGRA_ICONS_ROOT)/*.nmar))
 POKEGRA_ICONS_MCELL	 	     	 := $(patsubst $(POKEGRA_ICONS_ROOT)/%.nmcr, $(build_dir)$(POKEGRA_ICONS_ARC)/%.nmcr, $(wildcard $(POKEGRA_ICONS_ROOT)/*.nmcr))
 POKEGRA_ICONS_BIN	 	         := $(patsubst $(POKEGRA_ICONS_ROOT)/%.bin, $(build_dir)$(POKEGRA_ICONS_ARC)/%.bin, $(wildcard $(POKEGRA_ICONS_ROOT)/*.bin))
-POKEGRA_ICONS_PAL	 	         := $(patsubst $(POKEGRA_ICONS_ROOT)/%.nclr, $(build_dir)$(POKEGRA_ICONS_ARC)/%.nclr, $(wildcard $(POKEGRA_ICONS_ROOT)/*.nclr))
-POKEGRA_ICONS			 	     := $(POKEGRA_ICONS_CHAR) $(POKEGRA_ICONS_CELL) $(POKEGRA_ICONS_ANIM) $(POKEGRA_ICONS_MCELL_ANIM) $(POKEGRA_ICONS_MCELL) $(POKEGRA_ICONS_BIN) $(POKEGRA_ICONS_PAL)
+POKEGRA_ICONS_PAL                := $(patsubst $(POKEGRA_ICONS_ROOT)/%.nclr, $(build_dir)$(POKEGRA_ICONS_ARC)/%.nclr, $(wildcard $(POKEGRA_ICONS_ROOT)/*.nclr))
+POKEGRA_ICONS                    := $(POKEGRA_ICONS_CHAR) $(POKEGRA_ICONS_CELL) $(POKEGRA_ICONS_ANIM) $(POKEGRA_ICONS_MCELL_ANIM) $(POKEGRA_ICONS_MCELL) $(POKEGRA_ICONS_BIN) $(POKEGRA_ICONS_PAL)
+
+POKEGRA_FOOTPRINTS_BIN	 	     := $(patsubst $(POKEGRA_FOOTPRINTS_ROOT)/%.bin, $(build_dir)$(POKEGRA_FOOTPRINTS_ARC)/%.bin, $(wildcard $(POKEGRA_FOOTPRINTS_ROOT)/*.bin))
+POKEGRA_FOOTPRINTS               := $(POKEGRA_FOOTPRINTS_BIN)
 
 # -------------------------------------------------------------------
 # Rules
@@ -180,8 +184,11 @@ $(build_dir)$(UI2_GRAPHICS_ARC) : $(UI2_GRAPHICS_ROOT)
 ## Builds the ARCs.
 $(build_dir)$(POKEGRA_SPRITES_ARC) : $(POKEGRA_SPRITES)
 $(build_dir)$(POKEGRA_ICONS_ARC) : $(POKEGRA_ICONS)
+$(build_dir)$(POKEGRA_FOOTPRINTS_ARC) : $(POKEGRA_FOOTPRINTS)
 ## Builds the files in the ARCs.
 ### Sprite rules for pokegra battle sprites.
 include data/pokegra_sprites.mk
 ### Sprite rules for pokegra icons.
 include data/pokegra_icons.mk
+### Sprite rules for pokegra footprints.
+include data/pokegra_footprints.mk
