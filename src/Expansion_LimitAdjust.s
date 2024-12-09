@@ -27,9 +27,13 @@ FULL_COPY_PML_PkmDecryptCheck_0x32:
     nop
     .size FULL_COPY_PML_PkmDecryptCheck_0x32, . - FULL_COPY_PML_PkmDecryptCheck_0x32
 
+@ Enable PersonalData load of "egg indexes"
+FULL_COPY_PML_PersonalGetDatID_0x5C:
+    .word 0xFFFF - PkmnCnt 
+    .size FULL_COPY_PML_PersonalGetDatID_0x5C, . - FULL_COPY_PML_PersonalGetDatID_0x5C
+
 @ Expand evolution methods...
 @ Add 6 bytes to file size
-@020207B4
 FULL_COPY_CheckEvolveSpecies_0xAC:
     movs r1, #0x30
     .size FULL_COPY_CheckEvolveSpecies_0xAC, . - FULL_COPY_CheckEvolveSpecies_0xAC
