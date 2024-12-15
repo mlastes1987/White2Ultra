@@ -1,4 +1,4 @@
-#include "include/swan/swantypes.h"
+#include "swan/swantypes.h"
 
 u8 PokemonIconPalettes[] {
 	/*none*/0x00,
