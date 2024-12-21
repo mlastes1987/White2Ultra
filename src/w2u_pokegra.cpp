@@ -1,13 +1,10 @@
 #include "Personal.h"
 #include "Species.h"
-#include "IconPalettes.h"
+#include "FileSystem.h"
 #include "pml/poke_param.h"
 #include "pml/poke_party.h"
 #include "pml/poke_data.h"
 #include "gfl/fs/gfl_archive.h"
-
-#include <stdarg.h>
-#include "NitroKernel/include/kPrint.h"
 
 #define EGG_INDEX 722
 
@@ -16,6 +13,8 @@
 #define REGIONAL_DEX_FILE_INDEX 826
 
 #define ICON_FORM_START 1456
+
+#define ICON_PALETTE_MAX 897
 
 namespace w2u {
     namespace pokegra {
@@ -165,16 +164,15 @@ namespace w2u {
 				
 			}
 
-			u32 palette = 0;
+			u32 palette = ReadByteFromFile("pokeicon_palette_map.bin", ICON_PALETTE_MAX, paletteIndex);
 			// Each Pokémon entry has 2 posible palettes, first 4 bits for male and the last 4 bits for female.
 			// (this is only used for frillish and jellycent in vanilla but the new icons don't make use of if for now)
 			if (Gender) {
-				palette = (PokemonIconPalettes[paletteIndex] & 0xF0u) >> 4;
+				palette = (palette & 0xF0u) >> 4;
 			}
 			else {
-				palette = PokemonIconPalettes[paletteIndex] & 0xF;
+				palette = palette & 0xF;
 			}
-
 			return palette;
 		}
     }

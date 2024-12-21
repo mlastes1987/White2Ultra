@@ -11,12 +11,15 @@ PML_LEARNSETS_ARC      := /a/0/1/8
 PML_EVOLUTION_ARC      := /a/0/1/9
 PML_MOVES_ARC          := /a/0/2/1
 ITEMS_ARC              := /a/0/2/4
-UI_GRAPHICS_ARC        := /a/0/8/2
 TRDATA_ARC 	           := /a/0/9/1
 TRPOKE_ARC 	           := /a/0/9/2
-UI2_GRAPHICS_ARC       := /a/1/2/5
 ENCOUNTERS_ARC         := /a/1/2/7
 POKEGRA_FOOTPRINTS_ARC := /a/1/6/5
+
+UI_GRAPHICS_ARC        := /a/0/8/2
+UI2_GRAPHICS_ARC       := /a/1/2/5
+MOVE_TYPEGRA_ARC       := /a/0/1/1
+HOF_GRAPHICS_ARC       := /a/2/1/3
 
 # -------------------------------------------------------------------
 # Data Directories
@@ -40,13 +43,16 @@ HALL_OF_FAME_GRAPHICS_ROOT := $(data_dir)/graphics/hall_of_fame
 POKEGRA_SPRITES_ROOT := $(data_dir)/graphics/pokegra/battle_sprites
 POKEGRA_ICONS_ROOT := $(data_dir)/graphics/pokegra/icons
 POKEGRA_FOOTPRINTS_ROOT := $(data_dir)/graphics/pokegra/footprints
+
 UI_GRAPHICS_ROOT := $(data_dir)/graphics/ui
 UI2_GRAPHICS_ROOT := $(data_dir)/graphics/ui_2
+MOVE_TYPEGRA_ROOT := $(data_dir)/graphics/battle
+HOF_GRAPHICS_ROOT := $(data_dir)/graphics/hall_of_fame
 
 # -------------------------------------------------------------------
 # Targets 
 # -------------------------------------------------------------------
-ARCS := $(POKEGRA_ICONS_ARC) $(POKEGRA_SPRITES_ARC) $(POKEGRA_FOOTPRINTS_ARC) $(ENCOUNTERS_ARC) $(TEXT_SYSTEM_ARC) $(ITEMS_ARC) $(PML_EVOLUTION_ARC) $(PML_PERSONAL_ARC) $(PML_LEARNSETS_ARC) $(PML_MOVES_ARC) $(TRDATA_ARC) $(TRPOKE_ARC)
+ARCS := $(POKEGRA_ICONS_ARC) $(POKEGRA_SPRITES_ARC) $(POKEGRA_FOOTPRINTS_ARC) $(ENCOUNTERS_ARC) $(TEXT_SYSTEM_ARC) $(ITEMS_ARC) $(PML_EVOLUTION_ARC) $(PML_PERSONAL_ARC) $(PML_LEARNSETS_ARC) $(PML_MOVES_ARC) $(TRDATA_ARC) $(TRPOKE_ARC) $(UI_GRAPHICS_ARC) $(UI2_GRAPHICS_ARC) $(MOVE_TYPEGRA_ARC) $(HOF_GRAPHICS_ARC)
 ARC_TARGETS := $(patsubst %, $(romfs)%, $(ARCS))
 
 # Generic
@@ -84,6 +90,18 @@ POKEGRA_ICONS                    := $(POKEGRA_ICONS_CHAR) $(POKEGRA_ICONS_CELL) 
 
 POKEGRA_FOOTPRINTS_BIN	 	     := $(patsubst $(POKEGRA_FOOTPRINTS_ROOT)/%.bin, $(build_dir)$(POKEGRA_FOOTPRINTS_ARC)/%.bin, $(wildcard $(POKEGRA_FOOTPRINTS_ROOT)/*.bin))
 POKEGRA_FOOTPRINTS               := $(POKEGRA_FOOTPRINTS_BIN)
+
+UI_GRAPHICS_BIN	 	             := $(patsubst $(UI_GRAPHICS_ROOT)/%.bin, $(build_dir)$(UI_GRAPHICS_ARC)/%.bin, $(wildcard $(UI_GRAPHICS_ROOT)/*.bin))
+UI_GRAPHICS                      := $(UI_GRAPHICS_BIN)
+
+UI2_GRAPHICS_BIN	 	         := $(patsubst $(UI2_GRAPHICS_ROOT)/%.bin, $(build_dir)$(UI2_GRAPHICS_ARC)/%.bin, $(wildcard $(UI2_GRAPHICS_ROOT)/*.bin))
+UI2_GRAPHICS                     := $(UI2_GRAPHICS_BIN)
+
+MOVE_TYPEGRA_BIN	 	         := $(patsubst $(MOVE_TYPEGRA_ROOT)/%.bin, $(build_dir)$(MOVE_TYPEGRA_ARC)/%.bin, $(wildcard $(MOVE_TYPEGRA_ROOT)/*.bin))
+MOVE_TYPEGRA                     := $(MOVE_TYPEGRA_BIN)
+
+HOF_GRAPHICS_BIN	 	         := $(patsubst $(HOF_GRAPHICS_ROOT)/%.bin, $(build_dir)$(HOF_GRAPHICS_ARC)/%.bin, $(wildcard $(HOF_GRAPHICS_ROOT)/*.bin))
+HOF_GRAPHICS                     := $(HOF_GRAPHICS_BIN)
 
 # -------------------------------------------------------------------
 # Rules
@@ -177,8 +195,25 @@ $(build_dir)$(TRPOKE_ARC)/%.bin : $(TRAINER_DATA_ROOT)/%.yml
 
 # UI Graphics ARCs
 # These should be temporary.
-$(build_dir)$(UI_GRAPHICS_ARC) : $(UI_GRAPHICS_ROOT)
-$(build_dir)$(UI2_GRAPHICS_ARC) : $(UI2_GRAPHICS_ROOT)
+$(build_dir)$(UI_GRAPHICS_ARC) : $(UI_GRAPHICS)
+$(build_dir)$(UI_GRAPHICS_ARC)/%.bin : $(UI_GRAPHICS_ROOT)/%.bin
+	@ mkdir -p $(@D)
+	cp $^ $@
+	
+$(build_dir)$(UI2_GRAPHICS_ARC) : $(UI2_GRAPHICS)
+$(build_dir)$(UI2_GRAPHICS_ARC)/%.bin : $(UI2_GRAPHICS_ROOT)/%.bin
+	@ mkdir -p $(@D)
+	cp $^ $@
+	
+$(build_dir)$(MOVE_TYPEGRA_ARC) : $(MOVE_TYPEGRA)
+$(build_dir)$(MOVE_TYPEGRA_ARC)/%.bin : $(MOVE_TYPEGRA_ROOT)/%.bin
+	@ mkdir -p $(@D)
+	cp $^ $@
+	
+$(build_dir)$(HOF_GRAPHICS_ARC) : $(HOF_GRAPHICS)
+$(build_dir)$(HOF_GRAPHICS_ARC)/%.bin : $(HOF_GRAPHICS_ROOT)/%.bin
+	@ mkdir -p $(@D)
+	cp $^ $@
 
 # pokegra ARCs
 ## Builds the ARCs.
