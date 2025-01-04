@@ -3,7 +3,7 @@
 
 namespace w2u {
     extern "C" {
-        b32 ReadDataFromFile(const char* fileName, const u32 fileSize, u8 *buffer) {
+        b32 ReadDataFromFile(const char* fileName, u32 bufferSize, u8 *buffer) {
             FSFile file;
             b32 successful_read;
             finit(&file);
@@ -11,23 +11,29 @@ namespace w2u {
                 // Type chart not found.
                 return false;
             }
-            successful_read = romfs_fread(&file, buffer, fileSize) == fileSize;
+
+            successful_read = romfs_fread(&file, buffer, bufferSize) == bufferSize;
             romfs_fclose(&file);
             return successful_read;
         }
 
-        u8 ReadByteFromFile(const char* fileName, const u32 fileSize, const u32 idx)
+        u8 ReadByteFromFile(const char* fileName, const u32 idx)
         {
-            if (idx >= fileSize) {
-                // Index is out of bounds.
-                return 0;
-            }
             FSFile file;
             finit(&file);
             if (!romfs_fopen(&file, fileName)) {
                 // Type chart not found.
                 return 0;
             }
+
+            romfs_fseek(&file, 0, IO_SEEK_END);
+	        u32 fileSize = romfs_ftell(&file);
+	        romfs_fseek(&file, 0, IO_SEEK_SET);
+            if (idx >= fileSize) {
+                // Index is out of bounds.
+                return 0;
+            }
+
             u8 output = 0;
             if (romfs_fseek(&file, idx, IO_SEEK_CUR)) {
                 if (romfs_fread(&file, &output, 1) != 1) {

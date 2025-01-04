@@ -52,10 +52,9 @@ namespace w2u {
             return 0;
         }
 
-        #define THUMB_BRANCH_GetPokemonTypeIconPalette THUMB_BRANCH_ARM9_0x0202D814
         u32 THUMB_BRANCH_GetPokemonTypeIconPalette(u32 pokeType)
         {
-            return ReadByteFromFile("type_palette_map.bin", TYPE_COUNT_MAX, pokeType);
+            return ReadByteFromFile("type_palette_map.bin", pokeType);
         }
     }
 }

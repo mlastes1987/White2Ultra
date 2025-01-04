@@ -5,9 +5,9 @@
 
 namespace w2u {
     extern "C" {
-        b32 ReadDataFromFile(const char* fileName, const u32 fileSize, u8 *buffer);
+        b32 ReadDataFromFile(const char* fileName, const u32 bufferSize, u8 *buffer);
 
-        u8 ReadByteFromFile(const char* fileName, const u32 fileSize, const u32 idx);
+        u8 ReadByteFromFile(const char* fileName, const u32 idx);
     }
 }
 

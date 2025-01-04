@@ -14,8 +14,6 @@
 
 #define ICON_FORM_START 1456
 
-#define ICON_PALETTE_MAX 897
-
 namespace w2u {
     namespace pokegra {
         extern "C" u32 PML_PersonalGetParamSingle(u32, u32, u32);
@@ -96,7 +94,7 @@ namespace w2u {
 
             if (pValidRarity) {
                 *pValidRarity = isRare;
-            }       
+            }
         }
 
         extern "C" s32 THUMB_BRANCH_PokeParty_GetIconIndex(u32 Species, u32 Form, u32 Gender, u32 isEgg) {
@@ -140,7 +138,6 @@ namespace w2u {
             return iconIndex + Gender;
         }
 
-		#define THUMB_BRANCH_PokeParty_GetIconPalette THUMB_BRANCH_ARM9_0x02021060
 		extern "C" u32 THUMB_BRANCH_PokeParty_GetIconPalette(u32 Species, u32 Form, u32 Gender, u32 IsEgg) {
 			// The palette index and species match unless there are any special cases
 			u32 paletteIndex = Species;
@@ -164,7 +161,7 @@ namespace w2u {
 				
 			}
 
-			u32 palette = ReadByteFromFile("pokeicon_palette_map.bin", ICON_PALETTE_MAX, paletteIndex);
+			u32 palette = ReadByteFromFile("pokeicon_palette_map.bin", paletteIndex);
 			// Each Pokémon entry has 2 posible palettes, first 4 bits for male and the last 4 bits for female.
 			// (this is only used for frillish and jellycent in vanilla but the new icons don't make use of if for now)
 			if (Gender) {
