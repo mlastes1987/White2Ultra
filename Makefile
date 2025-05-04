@@ -61,6 +61,8 @@ $(project).nds: $(ARC_TARGETS) $(romfs)/patches/$(project).dll
 	@ echo "[+] Copying build NARCs..."
 
 	cp $(data_dir)/type_chart.bin $(romfs)/type_chart.bin
+	cp $(data_dir)/type_palette_map.bin $(romfs)/type_palette_map.bin
+	cp $(data_dir)/pokeicon_palette_map.bin $(romfs)/pokeicon_palette_map.bin
 
 	@ echo "[+] Making $@..."
 	$(ndstool) -c $@ -9 $(exefs)/ARM9.bin -7 $(exefs)/ARM7.bin -9i $(exefs)/ARM9i.bin -7i $(exefs)/ARM7i.bin -y9 $(exefs)/ARM9OVT.bin -y7 $(exefs)/ARM7OVT.bin -d $(romfs) -y $(exefs)/overlay -t $(exefs)/banner.bin -h $(exefs)/header.bin
