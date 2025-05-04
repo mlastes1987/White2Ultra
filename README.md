@@ -5,6 +5,9 @@ This repository aims to bring new features to the Generation V Pokémon game, Po
 - Expanded Pokédex (currently up to 721).
 - Fairy type.
 
+## Discord
+The Discord for this project can be found [here](https://discord.gg/cpKaXEURkQ).
+
 ## Setup
 You will need the following tools to use this repository:
 - [arm-none-eabi-{as, gcc, ld}](https://developer.arm.com/downloads/-/gnu-rm).
@@ -26,6 +29,9 @@ You will need the following tools to use this repository:
 
 ### Building
 Once the repository is setup, run `make -j$(nproc)`. If all goes well, you shall see `White2Upgrade.nds` at the end of your build.
+
+## Contributing
+See [Contributing](https://github.com/ds-pokemon-hacking/White2Upgrade/blob/main/CONTRIBUTING.md) for details.
 
 ## Creators
 - [PlatinumMaster](https://github.com/PlatinumMaster)
