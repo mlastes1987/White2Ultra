@@ -1,5 +1,5 @@
 # Project specific
-project 		:= White2Upgrade
+project 		:= White2Ultra
 rom_code 		:= IRDO
 
 # Directory configuration.
